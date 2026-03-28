@@ -1,46 +1,64 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Send SMS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMS Sender</title>
+
+<link rel="manifest" href="manifest.json">
+
 <style>
 body{
 font-family: Arial;
-text-align: center;
-margin-top: 50px;
+text-align:center;
+margin-top:60px;
 }
 
 input, textarea{
-width: 250px;
-padding: 10px;
-margin: 10px;
+width:80%;
+padding:12px;
+margin:10px;
 }
 
 button{
-padding: 10px 20px;
-background: green;
-color: white;
-border: none;
+padding:12px 25px;
+background:green;
+color:white;
+border:none;
+font-size:16px;
 }
 </style>
 </head>
 
 <body>
 
-<h2>Send SMS</h2>
+<h2>SMS Sender</h2>
 
-<input type="text" id="phone" placeholder="Enter Phone Number"><br>
+<input type="text" id="phone" placeholder="Phone number">
 
-<textarea id="message" placeholder="Type your message"></textarea><br>
+<br>
+
+<textarea id="message" placeholder="Type message"></textarea>
+
+<br>
 
 <button onclick="sendSMS()">Send</button>
 
 <script>
+
 function sendSMS(){
+
 let phone = document.getElementById("phone").value;
 let message = document.getElementById("message").value;
 
-window.location.href = "sms:" + phone + "?body=" + encodeURIComponent(message);
+window.location.href = "sms:"+phone+"?body="+encodeURIComponent(message);
+
 }
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js');
+}
+
 </script>
 
 </body>
