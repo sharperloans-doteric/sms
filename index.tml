@@ -1,86 +1,64 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick SMS KE</title>
-    <meta name="theme-color" content="#00b140">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #00b140, #008c2f);
-            color: white;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .box {
-            background: white;
-            color: #333;
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-        h1 { text-align: center; color: #00b140; margin-bottom: 10px; }
-        p { text-align: center; color: #555; margin-bottom: 20px; }
-        label { display: block; margin: 15px 0 6px; font-weight: bold; }
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 16px;
-        }
-        textarea { min-height: 120px; }
-        button {
-            width: 100%;
-            background: #00b140;
-            color: white;
-            border: none;
-            padding: 16px;
-            font-size: 18px;
-            border-radius: 12px;
-            margin-top: 25px;
-            font-weight: bold;
-        }
-        .note { font-size: 13px; color: #777; text-align: center; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h1>🇰🇪 Quick SMS</h1>
-        <p>Opens your normal Messages app (Safaricom, Airtel, etc.)</p>
-        
-        <label>Phone Number</label>
-        <input type="tel" id="number" placeholder="0712345678 or +254712345678" maxlength="15">
-        
-        <label>Message</label>
-        <textarea id="message" placeholder="Type your message here..."></textarea>
-        
-        <button onclick="sendSMS()">SEND TO SMS APP</button>
-        
-        <div class="note">
-            Message will appear in your normal SMS conversation<br>
-            Works with Safaricom • Airtel • Telkom • any number
-        </div>
-    </div>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMS Sender</title>
 
-    <script>
-        function sendSMS() {
-            const num = document.getElementById("number").value.trim();
-            const msg = document.getElementById("message").value.trim();
-            
-            if (!num) return alert("Please enter phone number");
-            if (!msg) return alert("Please type a message");
-            
-            window.location.href = `sms:${num}?body=${encodeURIComponent(msg)}`;
-        }
-    </script>
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+font-family: Arial;
+text-align:center;
+margin-top:60px;
+}
+
+input, textarea{
+width:80%;
+padding:12px;
+margin:10px;
+}
+
+button{
+padding:12px 25px;
+background:green;
+color:white;
+border:none;
+font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Send SMS</h2>
+
+<input type="text" id="phone" placeholder="Phone number">
+
+<br>
+
+<textarea id="message" placeholder="Type message"></textarea>
+
+<br>
+
+<button onclick="sendSMS()">Send</button>
+
+<script>
+
+function sendSMS(){
+
+let phone = document.getElementById("phone").value;
+let message = document.getElementById("message").value;
+
+window.location.href = "sms:"+phone+"?body="+encodeURIComponent(message);
+
+}
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js');
+}
+
+</script>
+
 </body>
 </html>
