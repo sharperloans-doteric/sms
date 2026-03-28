@@ -1,65 +1,144 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMS Sender</title>
-
-<link rel="manifest" href="manifest.json">
-
-<style>
-body{
-font-family: Arial;
-text-align:center;
-margin-top:60px;
-}
-
-input, textarea{
-width:80%;
-padding:12px;
-margin:10px;
-}
-
-button{
-padding:12px 25px;
-background:green;
-color:white;
-border:none;
-font-size:16px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick SMS • Kenya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #00b140, #008c2f);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #00b140;
+            font-size: 28px;
+        }
+        p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #00b140;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            background: #00b140;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 12px;
+            margin-top: 25px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 177, 64, 0.3);
+            transition: all 0.3s;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .note {
+            font-size: 13px;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .flag {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="card">
+        <div class="flag">🇰🇪</div>
+        <h1>Quick SMS</h1>
+        <p>Send message → opens your normal SMS app (with Safaricom, Airtel, etc.)</p>
+        
+        <label>Phone Number</label>
+        <input type="tel" id="number" placeholder="0712345678 or +254712345678" maxlength="15">
+        
+        <label>Your Message</label>
+        <textarea id="message" placeholder="Type your message here..."></textarea>
+        
+        <button onclick="sendSMS()">SEND TO SMS APP</button>
+        
+        <div class="note">
+            ✅ Your message will appear naturally in the SMS app<br>
+            ✅ Works with Safaricom, Airtel, any number<br>
+            ✅ Just tap Send again in the SMS app
+        </div>
+    </div>
 
-<h2>SMS Sender</h2>
+    <script>
+        function sendSMS() {
+            const number = document.getElementById("number").value.trim();
+            const message = document.getElementById("message").value.trim();
 
-<input type="text" id="phone" placeholder="Phone number">
+            if (!number) {
+                alert("Please enter a phone number");
+                return;
+            }
+            if (!message) {
+                alert("Please type a message");
+                return;
+            }
 
-<br>
+            // This is the magic line that opens your real SMS app
+            const smsLink = `sms:${number}?body=${encodeURIComponent(message)}`;
+            
+            window.location.href = smsLink;
+        }
 
-<textarea id="message" placeholder="Type message"></textarea>
-
-<br>
-
-<button onclick="sendSMS()">Send</button>
-
-<script>
-
-function sendSMS(){
-
-let phone = document.getElementById("phone").value;
-let message = document.getElementById("message").value;
-
-window.location.href = "sms:"+phone+"?body="+encodeURIComponent(message);
-
-}
-
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
-}
-
-</script>
-
+        // Bonus: Press Enter on keyboard also works
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Enter") {
+                sendSMS();
+            }
+        });
+    </script>
 </body>
 </html>
