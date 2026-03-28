@@ -5,43 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick SMS KE</title>
+    <meta name="theme-color" content="#00b140">
     <style>
-        body { font-family: Arial, sans-serif; background: #00b140; color: white; margin: 0; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .box { background: white; color: #333; border-radius: 20px; padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #00b140, #008c2f);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .box {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
         h1 { text-align: center; color: #00b140; margin-bottom: 10px; }
         p { text-align: center; color: #555; margin-bottom: 20px; }
-        label { display: block; margin: 15px 0 5px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
-        button { width: 100%; background: #00b140; color: white; border: none; padding: 15px; font-size: 18px; border-radius: 10px; margin-top: 20px; }
+        label { display: block; margin: 15px 0 6px; font-weight: bold; }
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+        textarea { min-height: 120px; }
+        button {
+            width: 100%;
+            background: #00b140;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 18px;
+            border-radius: 12px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
         .note { font-size: 13px; color: #777; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="box">
         <h1>🇰🇪 Quick SMS</h1>
-        <p>Opens your normal SMS app (Safaricom, Airtel, etc.)</p>
+        <p>Opens your normal Messages app (Safaricom, Airtel, etc.)</p>
         
         <label>Phone Number</label>
-        <input type="tel" id="number" placeholder="0712345678" maxlength="15">
+        <input type="tel" id="number" placeholder="0712345678 or +254712345678" maxlength="15">
         
         <label>Message</label>
-        <textarea id="message" rows="5" placeholder="Type your message here..."></textarea>
+        <textarea id="message" placeholder="Type your message here..."></textarea>
         
         <button onclick="sendSMS()">SEND TO SMS APP</button>
         
         <div class="note">
-            ✅ Message appears in your normal Messages app<br>
-            ✅ Works with all networks
+            Message will appear in your normal SMS conversation<br>
+            Works with Safaricom • Airtel • Telkom • any number
         </div>
     </div>
 
     <script>
         function sendSMS() {
-            let num = document.getElementById("number").value.trim();
-            let msg = document.getElementById("message").value.trim();
+            const num = document.getElementById("number").value.trim();
+            const msg = document.getElementById("message").value.trim();
             
-            if (!num) return alert("Enter phone number");
-            if (!msg) return alert("Type a message");
+            if (!num) return alert("Please enter phone number");
+            if (!msg) return alert("Please type a message");
             
             window.location.href = `sms:${num}?body=${encodeURIComponent(msg)}`;
         }
