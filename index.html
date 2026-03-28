@@ -2,77 +2,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick SMS Link</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 400px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        input, textarea {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        button {
-            width: 95%;
-            padding: 15px;
-            background: #25D366; /* WhatsApp/SMS Green */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:active {
-            transform: scale(0.98);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premier League Betting</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2") no-repeat center/cover;
+color:white;
+text-align:center;
+}
+
+header{
+background:#0a0f2c;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+header h2{
+margin:0;
+}
+
+nav a{
+margin:0 10px;
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.main{
+padding:20px;
+}
+
+.title{
+font-size:32px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.subtitle{
+margin-bottom:20px;
+}
+
+.teams{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+max-width:800px;
+margin:auto;
+}
+
+.team{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.team:hover{
+transform:scale(1.05);
+}
+
+.team img{
+width:80px;
+}
+
+.team-name{
+margin-top:10px;
+font-weight:bold;
+}
+
+.form-box{
+margin-top:30px;
+background:rgba(0,0,0,0.7);
+padding:20px;
+border-radius:10px;
+max-width:400px;
+margin-left:auto;
+margin-right:auto;
+}
+
+select,input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+}
+
+button{
+background:linear-gradient(#5edc1f,#2f9f0c);
+border:none;
+padding:12px;
+width:100%;
+font-size:16px;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.footer{
+margin-top:20px;
+font-weight:bold;
+font-size:18px;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Open Conversation</h2>
-    <p style="color: #666; font-size: 14px;">This will open your messaging app to the number entered.</p>
-    
-    <input type="tel" id="phone" placeholder="Phone Number (e.g. +123456789)">
-    <textarea id="message" rows="4" placeholder="Type your draft message here..."></textarea>
-    
-    <button onclick="openSMS()">Open Messages</button>
+<header>
+<h2>Premier League Betting</h2>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Odds</a>
+<a href="#">Promotions</a>
+<a href="#">Live Betting</a>
+<a href="#">Help</a>
+</nav>
+</header>
+
+
+<div class="main">
+
+<div class="title">WHO WILL WIN THE PREMIER LEAGUE?</div>
+<div class="subtitle">Select your team & predict the winning point total</div>
+
+
+<div class="teams">
+
+<div class="team" onclick="selectTeam('Arsenal')">
+<img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg">
+<div class="team-name">Arsenal</div>
 </div>
 
-<script>
-function openSMS() {
-    const phone = document.getElementById("phone").value.trim();
-    const message = document.getElementById("message").value;
-    
-    if (!phone) {
-        alert("Please enter a phone number first.");
-        return;
-    }
+<div class="team" onclick="selectTeam('Man City')">
+<img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg">
+<div class="team-name">Man City</div>
+</div>
 
-    // Different OS behavior: 
-    // iOS often prefers '&' while Android and older systems prefer '?'
-    // Using '?' is the most universal standard for the body.
-    const smsLink = `sms:${phone}?body=${encodeURIComponent(message)}`;
-    
-    window.location.href = smsLink;
+<div class="team" onclick="selectTeam('Man United')">
+<img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg">
+<div class="team-name">Man United</div>
+</div>
+
+<div class="team" onclick="selectTeam('Chelsea')">
+<img src="https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg">
+<div class="team-name">Chelsea</div>
+</div>
+
+<div class="team" onclick="selectTeam('Liverpool')">
+<img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg">
+<div class="team-name">Liverpool</div>
+</div>
+
+<div class="team" onclick="selectTeam('Aston Villa')">
+<img src="https://upload.wikimedia.org/wikipedia/en/f/f9/Aston_Villa_FC_crest_%282016%29.svg">
+<div class="team-name">Aston Villa</div>
+</div>
+
+</div>
+
+
+<div class="form-box">
+
+<select id="team">
+<option>Select Team</option>
+<option>Arsenal</option>
+<option>Man City</option>
+<option>Man United</option>
+<option>Chelsea</option>
+<option>Liverpool</option>
+<option>Aston Villa</option>
+</select>
+
+<input type="number" placeholder="Enter points total (e.g 86)" id="points">
+
+<button onclick="bet()">PLACE YOUR BET</button>
+
+</div>
+
+
+<div class="footer">
+Winner Gets 🇰🇪 100,000 KSH
+</div>
+
+</div>
+
+
+<script>
+
+function selectTeam(team){
+document.getElementById("team").value=team
 }
+
+function bet(){
+let team=document.getElementById("team").value
+let points=document.getElementById("points").value
+
+if(team==="Select Team"||points===""){
+alert("Please select team and enter points")
+return
+}
+
+alert("Bet placed for "+team+" with "+points+" points prediction")
+}
+
 </script>
 
 </body>
