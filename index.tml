@@ -5,126 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick SMS KE</title>
-    <meta name="theme-color" content="#00b140">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #00b140, #008c2f);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .card {
-            background: white;
-            color: #333;
-            border-radius: 20px;
-            padding: 30px 25px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 8px;
-            color: #00b140;
-            font-size: 28px;
-        }
-        p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 15px;
-        }
-        label {
-            display: block;
-            margin: 18px 0 8px;
-            font-weight: 500;
-            color: #333;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-        }
-        input:focus, textarea:focus {
-            border-color: #00b140;
-        }
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        button {
-            width: 100%;
-            background: #00b140;
-            color: white;
-            border: none;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 500;
-            border-radius: 12px;
-            margin-top: 25px;
-            cursor: pointer;
-        }
-        .note {
-            font-size: 13px;
-            color: #777;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .flag { text-align: center; font-size: 28px; margin-bottom: 10px; }
+        body { font-family: Arial, sans-serif; background: #00b140; color: white; margin: 0; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .box { background: white; color: #333; border-radius: 20px; padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        h1 { text-align: center; color: #00b140; margin-bottom: 10px; }
+        p { text-align: center; color: #555; margin-bottom: 20px; }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
+        button { width: 100%; background: #00b140; color: white; border: none; padding: 15px; font-size: 18px; border-radius: 10px; margin-top: 20px; }
+        .note { font-size: 13px; color: #777; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="flag">🇰🇪</div>
-        <h1>Quick SMS</h1>
-        <p>Send SMS → Opens your normal Messages app</p>
+    <div class="box">
+        <h1>🇰🇪 Quick SMS</h1>
+        <p>Opens your normal SMS app (Safaricom, Airtel, etc.)</p>
         
         <label>Phone Number</label>
-        <input type="tel" id="number" placeholder="0712345678 or +254712345678" maxlength="15">
+        <input type="tel" id="number" placeholder="0712345678" maxlength="15">
         
         <label>Message</label>
-        <textarea id="message" placeholder="Type your message here..."></textarea>
+        <textarea id="message" rows="5" placeholder="Type your message here..."></textarea>
         
         <button onclick="sendSMS()">SEND TO SMS APP</button>
         
         <div class="note">
-            Works with Safaricom, Airtel, Telkom & any number<br>
-            Tap Send again in your SMS app
+            ✅ Message appears in your normal Messages app<br>
+            ✅ Works with all networks
         </div>
     </div>
 
     <script>
         function sendSMS() {
-            const number = document.getElementById("number").value.trim();
-            const message = document.getElementById("message").value.trim();
-
-            if (!number) return alert("Please enter phone number");
-            if (!message) return alert("Please type a message");
-
-            const smsLink = `sms:${number}?body=${encodeURIComponent(message)}`;
-            window.location.href = smsLink;
-        }
-
-        // Register Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(() => console.log('PWA Service Worker ready'))
-                .catch(err => console.log('Service Worker error:', err));
+            let num = document.getElementById("number").value.trim();
+            let msg = document.getElementById("message").value.trim();
+            
+            if (!num) return alert("Enter phone number");
+            if (!msg) return alert("Type a message");
+            
+            window.location.href = `sms:${num}?body=${encodeURIComponent(msg)}`;
         }
     </script>
 </body>
