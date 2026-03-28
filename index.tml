@@ -1,61 +1,223 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMS Sender</title>
 
-<link rel="manifest" href="manifest.json">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premier League Betting</title>
 
 <style>
+
 body{
-font-family: Arial;
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2") no-repeat center/cover;
+color:white;
 text-align:center;
-margin-top:60px;
 }
 
-input, textarea{
-width:80%;
-padding:12px;
-margin:10px;
+header{
+background:#0a0f2c;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+header h2{
+margin:0;
+}
+
+nav a{
+margin:0 10px;
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.main{
+padding:20px;
+}
+
+.title{
+font-size:32px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.subtitle{
+margin-bottom:20px;
+}
+
+.teams{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+max-width:800px;
+margin:auto;
+}
+
+.team{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.team:hover{
+transform:scale(1.05);
+}
+
+.team img{
+width:80px;
+}
+
+.team-name{
+margin-top:10px;
+font-weight:bold;
+}
+
+.form-box{
+margin-top:30px;
+background:rgba(0,0,0,0.7);
+padding:20px;
+border-radius:10px;
+max-width:400px;
+margin-left:auto;
+margin-right:auto;
+}
+
+select,input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
 }
 
 button{
-padding:12px 25px;
-background:green;
-color:white;
+background:linear-gradient(#5edc1f,#2f9f0c);
 border:none;
+padding:12px;
+width:100%;
 font-size:16px;
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
+
+button:hover{
+opacity:0.9;
+}
+
+.footer{
+margin-top:20px;
+font-weight:bold;
+font-size:18px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h2>Send SMS</h2>
+<header>
+<h2>Premier League Betting</h2>
 
-<input type="text" id="phone" placeholder="Phone number">
+<nav>
+<a href="#">Home</a>
+<a href="#">Odds</a>
+<a href="#">Promotions</a>
+<a href="#">Live Betting</a>
+<a href="#">Help</a>
+</nav>
+</header>
 
-<br>
 
-<textarea id="message" placeholder="Type message"></textarea>
+<div class="main">
 
-<br>
+<div class="title">WHO WILL WIN THE PREMIER LEAGUE?</div>
+<div class="subtitle">Select your team & predict the winning point total</div>
 
-<button onclick="sendSMS()">Send</button>
+
+<div class="teams">
+
+<div class="team" onclick="selectTeam('Arsenal')">
+<img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg">
+<div class="team-name">Arsenal</div>
+</div>
+
+<div class="team" onclick="selectTeam('Man City')">
+<img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg">
+<div class="team-name">Man City</div>
+</div>
+
+<div class="team" onclick="selectTeam('Man United')">
+<img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg">
+<div class="team-name">Man United</div>
+</div>
+
+<div class="team" onclick="selectTeam('Chelsea')">
+<img src="https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg">
+<div class="team-name">Chelsea</div>
+</div>
+
+<div class="team" onclick="selectTeam('Liverpool')">
+<img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg">
+<div class="team-name">Liverpool</div>
+</div>
+
+<div class="team" onclick="selectTeam('Aston Villa')">
+<img src="https://upload.wikimedia.org/wikipedia/en/f/f9/Aston_Villa_FC_crest_%282016%29.svg">
+<div class="team-name">Aston Villa</div>
+</div>
+
+</div>
+
+
+<div class="form-box">
+
+<select id="team">
+<option>Select Team</option>
+<option>Arsenal</option>
+<option>Man City</option>
+<option>Man United</option>
+<option>Chelsea</option>
+<option>Liverpool</option>
+<option>Aston Villa</option>
+</select>
+
+<input type="number" placeholder="Enter points total (e.g 86)" id="points">
+
+<button onclick="bet()">PLACE YOUR BET</button>
+
+</div>
+
+
+<div class="footer">
+Winner Gets 🇰🇪 100,000 KSH
+</div>
+
+</div>
+
 
 <script>
 
-function sendSMS(){
-
-let phone = document.getElementById("phone").value;
-let message = document.getElementById("message").value;
-
-window.location.href = "sms:"+phone+"?body="+encodeURIComponent(message);
-
+function selectTeam(team){
+document.getElementById("team").value=team
 }
 
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
+function bet(){
+let team=document.getElementById("team").value
+let points=document.getElementById("points").value
+
+if(team==="Select Team"||points===""){
+alert("Please select team and enter points")
+return
+}
+
+alert("Bet placed for "+team+" with "+points+" points prediction")
 }
 
 </script>
