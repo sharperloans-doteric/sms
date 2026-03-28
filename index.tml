@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Send SMS</title>
+<style>
+body{
+font-family: Arial;
+text-align: center;
+margin-top: 50px;
+}
+
+input, textarea{
+width: 250px;
+padding: 10px;
+margin: 10px;
+}
+
+button{
+padding: 10px 20px;
+background: green;
+color: white;
+border: none;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Send SMS</h2>
+
+<input type="text" id="phone" placeholder="Enter Phone Number"><br>
+
+<textarea id="message" placeholder="Type your message"></textarea><br>
+
+<button onclick="sendSMS()">Send</button>
+
+<script>
+function sendSMS(){
+let phone = document.getElementById("phone").value;
+let message = document.getElementById("message").value;
+
+window.location.href = "sms:" + phone + "?body=" + encodeURIComponent(message);
+}
+</script>
+
+</body>
+</html>
