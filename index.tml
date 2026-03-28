@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick SMS • Kenya</title>
+    <title>Quick SMS KE</title>
+    <meta name="theme-color" content="#00b140">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
         
@@ -53,7 +59,6 @@
             border-radius: 12px;
             font-size: 16px;
             outline: none;
-            transition: all 0.3s;
         }
         input:focus, textarea:focus {
             border-color: #00b140;
@@ -73,11 +78,6 @@
             border-radius: 12px;
             margin-top: 25px;
             cursor: pointer;
-            box-shadow: 0 8px 15px rgba(0, 177, 64, 0.3);
-            transition: all 0.3s;
-        }
-        button:active {
-            transform: scale(0.97);
         }
         .note {
             font-size: 13px;
@@ -85,31 +85,26 @@
             text-align: center;
             margin-top: 20px;
         }
-        .flag {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
+        .flag { text-align: center; font-size: 28px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="flag">🇰🇪</div>
         <h1>Quick SMS</h1>
-        <p>Send message → opens your normal SMS app (with Safaricom, Airtel, etc.)</p>
+        <p>Send SMS → Opens your normal Messages app</p>
         
         <label>Phone Number</label>
         <input type="tel" id="number" placeholder="0712345678 or +254712345678" maxlength="15">
         
-        <label>Your Message</label>
+        <label>Message</label>
         <textarea id="message" placeholder="Type your message here..."></textarea>
         
         <button onclick="sendSMS()">SEND TO SMS APP</button>
         
         <div class="note">
-            ✅ Your message will appear naturally in the SMS app<br>
-            ✅ Works with Safaricom, Airtel, any number<br>
-            ✅ Just tap Send again in the SMS app
+            Works with Safaricom, Airtel, Telkom & any number<br>
+            Tap Send again in your SMS app
         </div>
     </div>
 
@@ -118,27 +113,19 @@
             const number = document.getElementById("number").value.trim();
             const message = document.getElementById("message").value.trim();
 
-            if (!number) {
-                alert("Please enter a phone number");
-                return;
-            }
-            if (!message) {
-                alert("Please type a message");
-                return;
-            }
+            if (!number) return alert("Please enter phone number");
+            if (!message) return alert("Please type a message");
 
-            // This is the magic line that opens your real SMS app
             const smsLink = `sms:${number}?body=${encodeURIComponent(message)}`;
-            
             window.location.href = smsLink;
         }
 
-        // Bonus: Press Enter on keyboard also works
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Enter") {
-                sendSMS();
-            }
-        });
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('PWA Service Worker ready'))
+                .catch(err => console.log('Service Worker error:', err));
+        }
     </script>
 </body>
 </html>
