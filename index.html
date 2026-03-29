@@ -1,64 +1,226 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMS Sender</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Sender</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<link rel="manifest" href="manifest.json">
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-<style>
-body{
-font-family: Arial;
-text-align:center;
-margin-top:60px;
-}
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
 
-input, textarea{
-width:80%;
-padding:12px;
-margin:10px;
-}
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
 
-button{
-padding:12px 25px;
-background:green;
-color:white;
-border:none;
-font-size:16px;
-}
-</style>
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .presets {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .preset-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .send-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .info strong {
+            color: #333;
+        }
+
+        .carriers {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <h1>📱 SMS Sender</h1>
+        <p class="subtitle">Opens your phone's SMS app with your message</p>
 
-<h2>SMS Sender</h2>
+        <div class="form-group">
+            <label for="phone">Phone Number / ID</label>
+            <input type="tel" id="phone" placeholder="e.g., 0712345678 or +254712345678" />
+        </div>
 
-<input type="text" id="phone" placeholder="Phone number">
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Type your message here..."></textarea>
+        </div>
 
-<br>
+        <div class="form-group">
+            <label>Quick Templates</label>
+            <div class="presets">
+                <button class="preset-btn" onclick="setTemplate('Hello, I wanted to reach out about...')">Greeting</button>
+                <button class="preset-btn" onclick="setTemplate('Hi, when can we meet?')">Meeting</button>
+                <button class="preset-btn" onclick="setTemplate('Reminder: ')">Reminder</button>
+                <button class="preset-btn" onclick="setTemplate('Thank you for...')">Thanks</button>
+            </div>
+        </div>
 
-<textarea id="message" placeholder="Type message"></textarea>
+        <button class="send-btn" onclick="sendSMS()">Send via SMS App 🚀</button>
 
-<br>
+        <div class="info">
+            <strong>How it works:</strong><br>
+            When you click send, this app opens your phone's default SMS app (Messages, Safaricom SMS, Airtel SMS, etc.) with the phone number and message pre-filled. You'll then send the message from your SMS app.
+        </div>
 
-<button onclick="sendSMS()">Send</button>
+        <div class="carriers">
+            <span>Safaricom</span>
+            <span>•</span>
+            <span>Airtel</span>
+            <span>•</span>
+            <span>Telkom</span>
+            <span>•</span>
+            <span>Faiba</span>
+        </div>
+    </div>
 
-<script>
+    <script>
+        function setTemplate(text) {
+            document.getElementById('message').value = text;
+        }
 
-function sendSMS(){
+        function sendSMS() {
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-let phone = document.getElementById("phone").value;
-let message = document.getElementById("message").value;
+            if (!phone) {
+                alert('Please enter a phone number');
+                return;
+            }
 
-window.location.href = "sms:"+phone+"?body="+encodeURIComponent(message);
+            // Clean phone number (remove spaces, dashes)
+            const cleanPhone = phone.replace(/[\s\-]/g, '');
 
-}
+            // Create SMS link
+            // On iOS: sms:phone&body=message
+            // On Android: sms:phone?body=message
+            let smsLink;
+            
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            
+            if (isIOS) {
+                smsLink = `sms:${cleanPhone}&body=${encodeURIComponent(message)}`;
+            } else {
+                smsLink = `sms:${cleanPhone}?body=${encodeURIComponent(message)}`;
+            }
 
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
-}
-
-</script>
-
+            // Open the SMS app
+            window.location.href = smsLink;
+        }
+    </script>
 </body>
 </html>
